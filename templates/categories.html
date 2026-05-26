@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+    <h1>Каталог товарів</h1>
+    <p>Оберіть категорію, щоб перейти до товарів цього розділу.</p>
+</section>
+
+<section class="catalog-layout">
+    <aside class="catalog-sidebar">
+        <a class="catalog-link" href="{{ url_for('index') }}">
+            <span>Усі товари</span>
+            <strong>{{ categories|length }}</strong>
+        </a>
+        {% for category in categories %}
+            <a class="catalog-link" href="{{ url_for('index', category=category) }}">
+                <span>{{ category }}</span>
+                <strong>{{ category_counts[category] }}</strong>
+            </a>
+        {% endfor %}
+    </aside>
+
+    <div class="catalog-info">
+        <div class="catalog-card">
+            <h2>Категорії</h2>
+            <p>На цій сторінці зібрані всі категорії товарів в магазині. Натисніть на потрібну категорію, і сайт відкриє список товарів тільки з цього розділу.</p>
+        </div>
+        <div class="catalog-card">
+            <h2>Навігація</h2>
+            <p>Якщо потрібно повернутись до повного списку, використовуйте кнопку <strong>Усі товари</strong>.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

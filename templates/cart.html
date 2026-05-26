@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-head">
+    <h1>Кошик</h1>
+    <p>Перевірте товари та виконайте замовлення.</p>
+</section>
+
+{% if items %}
+    <section class="cart-list">
+        {% for item in items %}
+            <article class="cart-item">
+                <div>
+                    <h2>{{ item.product.name }}</h2>
+                    <p>{{ item.product.description }}</p>
+                    <strong>{{ item.product.price }} грн за шт.</strong>
+                </div>
+                <form class="cart-form" action="{{ url_for('update_cart', product_id=item.product.id) }}" method="post">
+                    <input type="number" name="quantity" min="0" value="{{ item.quantity }}">
+                    <button class="button" type="submit">Оновити</button>
+                </form>
+                <strong>{{ item.subtotal }} грн</strong>
+            </article>
+        {% endfor %}
+    </section>
+
+    <section class="checkout">
+        <div class="total-box">
+            <h2>Разом: {{ total }} грн</h2>
+        </div>
+        <form class="checkout-form" action="{{ url_for('checkout') }}" method="post">
+            <input type="text" name="name" placeholder="Ваше ім'я">
+            <input type="text" name="address" placeholder="Адреса доставки">
+            <button class="button" type="submit">Оформити замовлення</button>
+        </form>
+    </section>
+{% else %}
+    <div class="empty-box">
+        <p>У кошику поки порожньо.</p>
+        <a class="button" href="{{ url_for('index') }}">Повернутися до каталогу</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Інтернет-магазин</p>
+        <h1>Твій зручний інтернет-магазин</h1>
+        <p class="hero-text">Інтернет-магазин з продажу товарів ( Кузьмічев Андрій Ярославович КІ22).</p>
+    </div>
+    <div class="hero-card">
+        <p>Товарів у кошику: <strong>{{ cart_count }}</strong></p>
+        <p>Сума: <strong>{{ cart_total }} грн</strong></p>
+        <a class="button secondary" href="{{ url_for('cart') }}">Перейти до кошика</a>
+    </div>
+</section>
+
+<section class="category-section" id="categories">
+    <div class="section-head">
+        <h2>Категорії товарів</h2>
+        {% if selected_category %}
+            <p>Товари цієї категорії: <strong>{{ selected_category }}</strong></p>
+        {% else %}
+            <p>Оберіть категорію, щоб знайти потрібний товар.</p>
+        {% endif %}
+    </div>
+    <div class="category-list">
+        <a class="category-link {% if not selected_category %}active{% endif %}" href="{{ url_for('index') }}">Усі товари</a>
+        {% for category in categories %}
+            <a class="category-link {% if selected_category == category %}active{% endif %}" href="{{ url_for('index', category=category) }}">{{ category }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="products">
+    {% for product in products %}
+        <article class="card">
+            <span class="tag">{{ product.category }}</span>
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <div class="card-footer">
+                <strong>{{ product.price }} грн</strong>
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+                    <button class="button" type="submit">Додати в кошик</button>
+                </form>
+            </div>
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

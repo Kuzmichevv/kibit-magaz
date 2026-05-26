@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="success-box">
+    <h1>Замовлення оформлено</h1>
+    <p>Дякуємо, {{ name }}. Ваше замовлення на суму <strong>{{ total }} грн</strong> прийнято.</p>
+    <a class="button" href="{{ url_for('index') }}">Продовжити покупки</a>
+</section>
+{% endblock %}
